@@ -1,0 +1,27 @@
+$main_background: #131722;
+
+.main__container {
+  min-height: calc(100vh - 70px);
+  background-color: $main_background;
+  padding: 10px;
+
+  h1 {
+    color: white;
+  }
+
+  .notes_row {
+    width: 100%;
+  }
+
+  .column {
+    display: flex;
+    justify-content: center;
+    margin: 20px 10px;
+    height: auto;
+  }
+
+}
+.btn {
+  background-color: black;
+  width: 260px;
+}

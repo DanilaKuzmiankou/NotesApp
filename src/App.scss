@@ -1,10 +1,12 @@
+@import "nullstyle.scss";
+
 @font-face {
   font-family: Avenir;
   src: url("assets/fonts/AvenirBlack.otf");
 }
 
+html { font-size: 10px; }
+
 * {
-  box-sizing: border-box;
   font-family: Avenir, sans-serif;
 }
-

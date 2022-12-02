@@ -1,0 +1,17 @@
+.navbar_container {
+  min-height: 70px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 10px 4%;
+  width: 100%;
+  background-color: #6c757d;
+
+  h1 {
+    font-family: Avenir, sans-serif;
+    font-size: 2.5rem;
+    color: white;
+  }
+}

@@ -1,0 +1,26 @@
+.floating_button {
+  height: 75px;
+  width: 75px;
+  position: fixed;
+  z-index: 10;
+  right: 15px;
+  bottom: 15px;
+  border-radius: 100%;
+  background-color: cornflowerblue;
+  text-align: center;
+  font-size: 3rem;
+  font-family: sans-serif;
+  outline: none;
+  background-position: center;
+  transition: background 0.5s;
+  border: none;
+
+  &:hover {
+    background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;
+  }
+  &:active {
+    background-color: #6eb9f7;
+    background-size: 100%;
+    transition: background 0s;
+  }
+}

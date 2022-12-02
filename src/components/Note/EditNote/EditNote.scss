@@ -1,0 +1,33 @@
+#title {
+  color: white;
+  font-size: 4rem;
+  padding-left: 40px;
+  border: none;
+  background-color: inherit;
+  transition: none;
+  border-radius: 0;
+  &:focus {
+    color: white;
+    outline: none;
+    background-color: inherit;
+    border: none;
+  }
+}
+
+#description {
+  font-size: 3rem;
+  color: white;
+  font-family: inherit;
+  margin: 0 10px;
+  border: none;
+  outline: none;
+  background-color: inherit;
+  transition: none;
+  border-radius: 0;
+  height: 100%;
+  &:focus {
+    color: white;
+    border: none;
+    background-color: inherit;
+  }
+}
