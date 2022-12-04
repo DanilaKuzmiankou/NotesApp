@@ -1,9 +1,4 @@
-import {
-    FC,
-    SyntheticEvent, useEffect,
-    useMemo,
-    useState
-} from "react";
+import {FC, useEffect, useState} from "react";
 import {CustomModal} from "../../CustomModal/CustomModal";
 import {BasicNote} from "../BasicNote/BasicNote";
 import {EditNote} from "../EditNote/EditNote";
@@ -11,7 +6,7 @@ import {EditNote} from "../EditNote/EditNote";
 interface NewNote {
     isEditModalOpen: boolean,
     changeEditModalState: (isOpen: boolean) => void
-    saveNote: (id:  number|undefined, title:string, description:string, color: string | undefined, tags: string[] | undefined) => void
+    saveNote: (id: number | undefined, title: string, description: string, color: string | undefined, tags: string[] | undefined) => void
 }
 
 export const NewNote: FC<NewNote> = ({saveNote, isEditModalOpen, changeEditModalState}) => {
@@ -34,9 +29,9 @@ export const NewNote: FC<NewNote> = ({saveNote, isEditModalOpen, changeEditModal
         changeEditModalState(!showEditModal)
     }
 
-    const handleSaveNote = (id:  number|undefined, title:string, description:string, color: string | undefined, tags: string[] | undefined) => {
+    const handleSaveNote = (id: number | undefined, title: string, description: string, color: string | undefined, tags: string[] | undefined) => {
         changeEditModalVisibility()
-        let newRandomNumber= randomNumber
+        let newRandomNumber = randomNumber
         while (randomNumber === newRandomNumber) {
             newRandomNumber = getRandomInt(6)
         }
@@ -45,7 +40,6 @@ export const NewNote: FC<NewNote> = ({saveNote, isEditModalOpen, changeEditModal
     }
 
     useEffect(() => {
-        console.log('changed')
         setShowEditModal(isEditModalOpen)
     }, [isEditModalOpen])
 
@@ -60,12 +54,14 @@ export const NewNote: FC<NewNote> = ({saveNote, isEditModalOpen, changeEditModal
                 <h1
                     style={{
                         color: '#6c757d',
+                        padding: 0,
+                        margin: 0,
                         position: 'absolute',
-                        top:'50%',
+                        top: '50%',
                         left: '50%',
-                        transform: 'translate(calc(-50% + 30px), -50%)',
+                        transform: 'translate(-50%, -50%)',
                         whiteSpace: 'nowrap'
-                }}
+                    }}
                 >
                     Add new note
                 </h1>

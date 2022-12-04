@@ -12,6 +12,7 @@
   background-color: inherit;
   transition: none;
   border-radius: 0;
+
   &:focus {
     outline: none;
     background-color: inherit;
@@ -23,6 +24,11 @@
   padding-left: 40px;
   margin-bottom: 20px;
 
+  @media screen and (max-width: 900px) {
+    font-size: 3rem;
+  }
+
+
   &:empty:before {
     content: 'Enter title';
     color: #6c757d
@@ -33,6 +39,11 @@
   margin-top: 50px;
   font-size: 2.3rem;
   color: black;
+
+  @media screen and (max-width: 900px) {
+    font-size: 1.5rem;
+  }
+
 }
 
 #description {
@@ -46,6 +57,11 @@
   transition: none;
   border-radius: 0;
   height: 100%;
+
+  @media screen and (max-width: 900px) {
+    font-size: 2rem;
+  }
+
   &:focus {
     color: white;
     border: none;

@@ -1,19 +1,6 @@
-import './MainScreenNote.scss'
-import {
-    ElementRef,
-    FC,
-    memo,
-    MouseEventHandler,
-    SyntheticEvent,
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState
-} from "react";
-import {BiEditAlt} from "react-icons/bi";
+import {FC, SyntheticEvent, useState} from "react";
 import {IconContext} from 'react-icons';
-import {AiOutlineDelete, AiOutlineEye} from "react-icons/ai";
+import {AiOutlineEye} from "react-icons/ai";
 import {CustomModal} from "../../CustomModal/CustomModal";
 import {BasicNote} from "../BasicNote/BasicNote";
 import {EditAndDeleteIcons} from "../../EditAndDeleteIcons/EditAndDeleteIcons";
@@ -26,7 +13,7 @@ interface NoteProps {
     description: string,
     tags: string[],
     color: string,
-    saveNote: (id:  number|undefined, title:string, description:string, color: string | undefined, tags: string[] | undefined) => void
+    saveNote: (id: number | undefined, title: string, description: string, color: string | undefined, tags: string[] | undefined) => void
     deleteNote: (id: number) => void
 }
 

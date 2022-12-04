@@ -1,15 +1,15 @@
 import './NotesPage.scss'
 import {FloatingButton} from "../../components/FloatingButton/FloatingButton";
 import {MainScreenNote} from "../../components/Note/MainScreenNote/MainScreenNote";
-import {Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Form, FormControl, Row} from "react-bootstrap";
 import {NewNote} from "../../components/Note/NewNote/NewNote";
-import {useState} from "react";
-import {BasicNote, Note} from "../../models/NoteInterface";
+import {ChangeEvent, useState} from "react";
+import {BasicNote} from "../../models/NoteInterface";
 
 export const NotesPage = () => {
 
     const userNotesString = localStorage.getItem('notes');
-    const userNotes = userNotesString ? JSON.parse(userNotesString) : []
+    const userNotes: BasicNote[] = userNotesString ? JSON.parse(userNotesString) : []
 
     const [notes, setNotes] = useState<BasicNote[]>(userNotes)
     const [showNewNoteModal, setShowNewNoteModal] = useState(false)
@@ -28,8 +28,8 @@ export const NotesPage = () => {
             setNotes(newNotes)
         } else if (color) {
             let id = 1
-            if(notes.length > 0) {
-                const noteWithHigherId =  notes.reduce((noteWithMaxId, note) => noteWithMaxId.id > note.id ? noteWithMaxId : note)
+            if (notes.length > 0) {
+                const noteWithHigherId = notes.reduce((noteWithMaxId, note) => noteWithMaxId.id > note.id ? noteWithMaxId : note)
                 id = noteWithHigherId.id + 1
             }
             newNotes = [...notes,
@@ -41,27 +41,47 @@ export const NotesPage = () => {
                     tags
                 }]
             setNotes(newNotes)
-            console.log('done!!!!')
         }
         localStorage.setItem('notes', JSON.stringify(newNotes))
     }
 
-    const deleteNode = (id:number) => {
+    const deleteNode = (id: number) => {
         const newNotes = notes.filter(note => note.id !== id)
         setNotes(newNotes)
-        localStorage.setItem('notes', JSON.stringify(notes))
+        localStorage.setItem('notes', JSON.stringify(newNotes))
     }
 
     const changeEditModalState = (isOpen: boolean) => {
         setShowNewNoteModal(isOpen)
     }
 
+    const search = () => {
+
+    }
+
+    const setSearchData = (event: ChangeEvent<HTMLInputElement>) => {
+        const tag = event.currentTarget.value
+        const currentNotes = tag ? userNotes.filter(note => note.tags?.includes(`#${tag}`)) : userNotes
+        setNotes(currentNotes)
+    }
+
     return (
         <div className='main__container'>
-            <Container fluid>
+            <h1>Notes Manager</h1>
+            <Form id='search_form' onSubmit={search}>
+                <FormControl
+                    id='search_input'
+                    type='search'
+                    placeholder='Search by tags'
+                    aria-label='Search'
+                    onChange={setSearchData}
+                />
+            </Form>
+            <Container id='notes_container' fluid>
                 <Row className='notes_row'>
                     <Col xs={'auto'} className='column'>
-                        <NewNote changeEditModalState={changeEditModalState} saveNote={saveNote} isEditModalOpen={showNewNoteModal}/>
+                        <NewNote changeEditModalState={changeEditModalState} saveNote={saveNote}
+                                 isEditModalOpen={showNewNoteModal}/>
                     </Col>
                     {notes.map((note, index) => (
                         <Col key={note.id} xs={'auto'} className='column'>
@@ -78,7 +98,6 @@ export const NotesPage = () => {
                     ))}
                 </Row>
             </Container>
-            <div className="note"></div>
             <FloatingButton onClick={() => changeEditModalState(true)}>+</FloatingButton>
         </div>
     );

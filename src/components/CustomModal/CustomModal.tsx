@@ -10,7 +10,7 @@ interface CustomModalProps {
     saveButton?: boolean,
 }
 
-export const CustomModal:FC<CustomModalProps> = ({onHide, show, children, bodyClassName, saveButton}) => {
+export const CustomModal: FC<CustomModalProps> = ({onHide, show, children, bodyClassName, saveButton}) => {
 
     return (
         <Modal

@@ -5,11 +5,13 @@ import {AiOutlineDelete} from "react-icons/ai";
 
 interface EditAndDeleteIconsProps {
     className: string,
+
     onEdit(event: SyntheticEvent<Element, Event>): void,
+
     onDelete(event: SyntheticEvent<Element, Event>): void
 }
 
-export const EditAndDeleteIcons:FC<EditAndDeleteIconsProps> = ({className, onEdit, onDelete}) => {
+export const EditAndDeleteIcons: FC<EditAndDeleteIconsProps> = ({className, onEdit, onDelete}) => {
     return (
         <div className={className}>
             <IconContext.Provider value={{size: '45', color: 'white'}}>
