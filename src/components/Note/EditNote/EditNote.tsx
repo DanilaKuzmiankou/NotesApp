@@ -1,9 +1,5 @@
-import {
-    ChangeEvent,
-    FC, FormEvent, forwardRef, useImperativeHandle, useRef,
-    useState
-} from "react";
-import {Button, Form} from "react-bootstrap";
+import {ChangeEvent, FC, FormEvent, useRef, useState} from "react";
+import {Form} from "react-bootstrap";
 import {BasicNoteProps} from "../../../models/NoteInterface";
 import './EditNote.scss'
 
@@ -15,11 +11,9 @@ export const EditNote: FC<EditNoteProps> = ({className, title, description, id, 
 
     const descriptionRef = useRef<HTMLDivElement>(null)
     const titleRef = useRef<HTMLDivElement>(null)
-
     const [editNoteDescription, setEditNoteDescription] = useState(highlightPrevTags(description, tags))
     const [editNoteTitle, setEditNoteTitle] = useState(highlightPrevTags(title, tags))
     const [editedTags, setEditedTags] = useState(tags.join(', '))
-
     const [titleError, setTitleError] = useState('')
     const [descriptionError, setDescriptionError] = useState('')
 
@@ -35,20 +29,16 @@ export const EditNote: FC<EditNoteProps> = ({className, title, description, id, 
     const saveResults = (editedTitle: string, editedDescription: string) => {
         const resultTags = saveTags(editedTitle, editedDescription, editedTags)
         setEditedTags(resultTags.join(', '))
-
         let cleanDescription
         let cleanTitle
-            console.log('proc', )
-            cleanTitle = cleanTextFromHTMLTags(editedTitle)
-            cleanDescription = cleanTextFromHTMLTags(editedDescription)
-            editedTitle = highlightPrevTags(highlightNewTags(cleanTitle, resultTags), resultTags)
-            editedDescription = highlightPrevTags(highlightNewTags(cleanDescription, resultTags), resultTags)
-
-
+        cleanTitle = cleanTextFromHTMLTags(editedTitle)
+        cleanDescription = cleanTextFromHTMLTags(editedDescription)
+        editedTitle = highlightPrevTags(highlightNewTags(cleanTitle, resultTags), resultTags)
+        editedDescription = highlightPrevTags(highlightNewTags(cleanDescription, resultTags), resultTags)
         setEditNoteDescription(editedDescription)
         setEditNoteTitle(editedTitle)
-         cleanDescription = cleanTextFromHTMLTags(editedDescription)
-         cleanTitle = cleanTextFromHTMLTags(editedTitle)
+        cleanDescription = cleanTextFromHTMLTags(editedDescription)
+        cleanTitle = cleanTextFromHTMLTags(editedTitle)
         saveNote(id, cleanTitle, cleanDescription, color, resultTags)
     }
 
@@ -71,17 +61,7 @@ export const EditNote: FC<EditNoteProps> = ({className, title, description, id, 
         return [...new Set(rawTags.map((tag) => tag.trim().slice(1, tag.length)))]
     }
 
-    function replaceTagsInString(tagsString: string): string {
-        let replacedString = tagsString
-        const tags = getTagsFromString(tagsString)
-        tags.forEach((tag) => {
-            replacedString = replacedString.replaceAll(`#${tag}`, ` <mark>${tag}</mark>&nbsp`)
-        })
-        return replacedString
-    }
-
     const getWordsFromString = (wordsString: string): string[] => wordsString.match(/\b(\w+)\b/g) ?? []
-
 
     const validateNote = (editedTitle: string, editedDescription: string, editedTagsString: string): boolean => {
         let validated = true
@@ -112,7 +92,6 @@ export const EditNote: FC<EditNoteProps> = ({className, title, description, id, 
     function highlightNewTags(text: string, tags: string[]): string {
         tags.forEach((tag) => {
             tag = tag.trim()
-            console.log('tag')
             text = text.replaceAll(tag, `<mark>${tag.slice(1, tag.length)}</mark>&nbsp;`)
         })
         return text

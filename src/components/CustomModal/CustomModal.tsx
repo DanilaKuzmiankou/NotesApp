@@ -10,7 +10,7 @@ interface CustomModalProps {
     saveButton?: boolean,
 }
 
-export const CustomModal:FC<CustomModalProps> = ({onHide, show, children, bodyClassName, saveButton}) => {
+export const CustomModal: FC<CustomModalProps> = ({onHide, show, children, bodyClassName, saveButton}) => {
 
     return (
         <Modal
@@ -25,8 +25,9 @@ export const CustomModal:FC<CustomModalProps> = ({onHide, show, children, bodyCl
                 <div className={`${bodyClassName} buttons`}>
                     {saveButton ?
                         <Button
+                            id='submit_button'
                             className='button'
-                            variant="success"
+                            variant="info"
                             form='edit_form'
                             type="submit"
                         >
@@ -34,7 +35,7 @@ export const CustomModal:FC<CustomModalProps> = ({onHide, show, children, bodyCl
                         </Button>
                         : null
                     }
-                    <Button className='button' variant="danger" onClick={onHide}>Close</Button>
+                    <Button className='button' variant="light" onClick={onHide}>Close</Button>
                 </div>
             </Modal.Body>
         </Modal>

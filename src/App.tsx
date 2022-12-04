@@ -1,14 +1,12 @@
 import './App.scss';
 import {NotesPage} from "./pages/NotesPage/NotesPage";
-import {Navbar} from "./components/Navbar/Navbar";
 
 function App() {
-  return (
-      <>
-        <Navbar />
-        <NotesPage />
-      </>
-  );
+    return (
+        <>
+            <NotesPage/>
+        </>
+    );
 }
 
 export default App;

@@ -31,6 +31,11 @@ $scale_transition_duration: 100ms;
 
   h1 {
     max-width: 700px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }
 
   p {
@@ -41,6 +46,7 @@ $scale_transition_duration: 100ms;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
   }
+
 
   .view_icon {
     position: absolute;
@@ -55,9 +61,13 @@ $scale_transition_duration: 100ms;
   .animated_icons {
     @extend .icons;
     opacity: 0;
+    @media (hover: none) {
+      opacity: 1;
+    }
     transition: opacity 500ms;
   }
 }
+
 
 .basic_container {
   min-height: 200px;
@@ -65,15 +75,19 @@ $scale_transition_duration: 100ms;
   flex-direction: column;
   position: relative;
   padding: 10px;
-  min-width: 400px;
   width: 100%;
+  min-width: calc(100vw - 40px);
 
+  @media screen and (min-width: 600px) {
+    min-width: 400px;
+  }
 
   h1 {
     color: white;
     font-size: 4rem;
-    margin-left: 40px;
-    padding-right: 150px;
+    margin: 15px 15px;
+    white-space: normal;
+    word-break: break-all;
   }
 
   p {
@@ -81,7 +95,9 @@ $scale_transition_duration: 100ms;
     height: available;
     color: white;
     font-family: inherit;
-    margin: 0 10px;
+    white-space: normal;
+    word-break: break-all;
+    margin: 0 15px 50px;
   }
 
   h2 {
@@ -96,15 +112,24 @@ $scale_transition_duration: 100ms;
 
   h1 {
     font-size: 6rem;
+    @media screen and (max-width: 900px) {
+      font-size: 3rem;
+    }
   }
 
   p {
     font-size: 4rem;
+    @media screen and (max-width: 900px) {
+      font-size: 2rem;
+    }
   }
 
   h2 {
     margin-top: 50px;
     font-size: 2.3rem;
+    @media screen and (max-width: 900px) {
+      font-size: 1.5rem;
+    }
   }
 }
 

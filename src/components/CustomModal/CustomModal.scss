@@ -1,17 +1,24 @@
-.modal_body{
+.modal_body {
   display: flex;
   flex-direction: column;
+
   .buttons {
     position: sticky;
     bottom: 0;
     display: flex;
     justify-content: right;
-    padding: 10px 40px;
-      .button   {
-        font-size: 2rem;
-        max-width: 90px;
-        margin-left: 10px;
-     }
+    padding: 10px 10px;
+
+    #submit_button {
+      background-color: #5c9bef;
+      border-color: #5c9bef;
+    }
+
+    .button {
+      font-size: 2rem;
+      max-width: 90px;
+      margin-left: 10px;
+    }
 
   }
 
