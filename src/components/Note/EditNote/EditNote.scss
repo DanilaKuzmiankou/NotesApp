@@ -1,24 +1,45 @@
-#title {
+.edit_form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+
+#title, #tags {
   color: white;
-  font-size: 4rem;
-  padding-left: 40px;
   border: none;
   background-color: inherit;
   transition: none;
   border-radius: 0;
   &:focus {
-    color: white;
     outline: none;
     background-color: inherit;
-    border: none;
   }
 }
 
+#title {
+  font-size: 6rem;
+  padding-left: 40px;
+  margin-bottom: 20px;
+
+  &:empty:before {
+    content: 'Enter title';
+    color: #6c757d
+  }
+}
+
+#tags {
+  margin-top: 50px;
+  font-size: 2.3rem;
+  color: black;
+}
+
 #description {
-  font-size: 3rem;
+  font-size: 4rem;
   color: white;
   font-family: inherit;
-  margin: 0 10px;
+  padding: 0 10px;
   border: none;
   outline: none;
   background-color: inherit;
@@ -30,4 +51,23 @@
     border: none;
     background-color: inherit;
   }
+
+  &:empty:before {
+    content: 'Enter description';
+    color: #6c757d
+  }
 }
+
+#title, #description {
+  &:hover {
+    cursor: text;
+  }
+}
+
+.custom-error-message {
+  color: #ff6565;
+  font-size: 2.3rem;
+  margin: 10px 10px;
+}
+
+

@@ -84,6 +84,28 @@ $scale_transition_duration: 100ms;
     margin: 0 10px;
   }
 
+  h2 {
+    font-size: 1.8rem;
+    margin-top: auto;
+  }
+
+}
+
+.view_container {
+  @extend .basic_container;
+
+  h1 {
+    font-size: 6rem;
+  }
+
+  p {
+    font-size: 4rem;
+  }
+
+  h2 {
+    margin-top: 50px;
+    font-size: 2.3rem;
+  }
 }
 
 .purple {

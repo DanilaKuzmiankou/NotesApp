@@ -6,10 +6,11 @@
     bottom: 0;
     display: flex;
     justify-content: right;
-    padding: 10px 20px;
-      .close_button   {
-      font-size: 2rem;
-      max-width: 90px;
+    padding: 10px 40px;
+      .button   {
+        font-size: 2rem;
+        max-width: 90px;
+        margin-left: 10px;
      }
 
   }

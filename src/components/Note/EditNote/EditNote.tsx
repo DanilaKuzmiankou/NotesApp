@@ -1,41 +1,160 @@
 import {
     ChangeEvent,
-    FC,
+    FC, FormEvent, forwardRef, useImperativeHandle, useRef,
     useState
 } from "react";
 import {Button, Form} from "react-bootstrap";
 import {BasicNoteProps} from "../../../models/NoteInterface";
 import './EditNote.scss'
 
-export const EditNote:FC<BasicNoteProps> = ({className, title,description, children, onClick}) => {
+interface EditNoteProps extends BasicNoteProps {
+    saveNote: (id: number | undefined, title: string, description: string, color: string | undefined, tags: string[] | undefined) => void
+}
 
-    const [noteTitle, setNoteTitle] = useState(title)
-    const [noteDescription, setNoteDescription] = useState(description)
+export const EditNote: FC<EditNoteProps> = ({className, title, description, id, saveNote, color, tags}) => {
 
-    const changeNoteTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        setNoteTitle(e.target.value)
+    const descriptionRef = useRef<HTMLDivElement>(null)
+    const titleRef = useRef<HTMLDivElement>(null)
+
+    const [editNoteDescription, setEditNoteDescription] = useState(highlightPrevTags(description, tags))
+    const [editNoteTitle, setEditNoteTitle] = useState(highlightPrevTags(title, tags))
+    const [editedTags, setEditedTags] = useState(tags.join(', '))
+
+    const [titleError, setTitleError] = useState('')
+    const [descriptionError, setDescriptionError] = useState('')
+
+    const submitForm = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        const editedDescription = descriptionRef.current!.innerHTML
+        const editedTitle = titleRef.current!.innerHTML
+        if (validateNote(editedTitle, editedDescription, editedTags)) {
+            saveResults(editedTitle, editedDescription)
+        }
     }
-    const changeNoteDescription = (e: ChangeEvent<HTMLInputElement>) => {
-        setNoteDescription(e.target.value)
+
+    const saveResults = (editedTitle: string, editedDescription: string) => {
+        const resultTags = saveTags(editedTitle, editedDescription, editedTags)
+        setEditedTags(resultTags.join(', '))
+
+        let cleanDescription
+        let cleanTitle
+            console.log('proc', )
+            cleanTitle = cleanTextFromHTMLTags(editedTitle)
+            cleanDescription = cleanTextFromHTMLTags(editedDescription)
+            editedTitle = highlightPrevTags(highlightNewTags(cleanTitle, resultTags), resultTags)
+            editedDescription = highlightPrevTags(highlightNewTags(cleanDescription, resultTags), resultTags)
+
+
+        setEditNoteDescription(editedDescription)
+        setEditNoteTitle(editedTitle)
+         cleanDescription = cleanTextFromHTMLTags(editedDescription)
+         cleanTitle = cleanTextFromHTMLTags(editedTitle)
+        saveNote(id, cleanTitle, cleanDescription, color, resultTags)
     }
+
+    const saveTags = (editedTitle: string, editedDescription: string, editedTagsString: string): string[] => {
+        let validatedTags = getWordsFromString(editedTagsString)
+        validatedTags = [...getTagsFromString(editedTitle), ...getTagsFromString(editedDescription), ...validatedTags]
+        return [...new Set(validatedTags.map(tag => `#${tag}`))]
+    }
+
+
+    const cleanTextFromHTMLTags = (text: string): string => {
+        const temp = document.createElement("div");
+        temp.innerHTML = text;
+        return temp.textContent || temp.innerText;
+    }
+
+    function getTagsFromString(tagsString: string) {
+        const getTagsFromStringRegExp = /#([a-zA-Z0-9])+/g
+        const rawTags = tagsString.match(getTagsFromStringRegExp) ?? []
+        return [...new Set(rawTags.map((tag) => tag.trim().slice(1, tag.length)))]
+    }
+
+    function replaceTagsInString(tagsString: string): string {
+        let replacedString = tagsString
+        const tags = getTagsFromString(tagsString)
+        tags.forEach((tag) => {
+            replacedString = replacedString.replaceAll(`#${tag}`, ` <mark>${tag}</mark>&nbsp`)
+        })
+        return replacedString
+    }
+
+    const getWordsFromString = (wordsString: string): string[] => wordsString.match(/\b(\w+)\b/g) ?? []
+
+
+    const validateNote = (editedTitle: string, editedDescription: string, editedTagsString: string): boolean => {
+        let validated = true
+        if (editedTitle.trim().length === 0) {
+            setTitleError('Invalid title')
+            validated = false
+        } else setTitleError('')
+        if (editedDescription.trim().length === 0) {
+            setDescriptionError('Invalid description')
+            validated = false
+        } else setDescriptionError('')
+        if (title === editedTitle && description === editedDescription && editedTagsString === tags.toString()) {
+            validated = false
+        }
+        return validated
+    }
+
+    const setTags = (event: ChangeEvent<HTMLInputElement>) => setEditedTags(event.target.value)
+
+    function highlightPrevTags(text: string, tags: string[]): string {
+        tags.forEach((tag) => {
+            tag = tag.trim().slice(1, tag.length)
+            text = text.replaceAll(tag, `<mark>${tag}</mark>`)
+        })
+        return text
+    }
+
+    function highlightNewTags(text: string, tags: string[]): string {
+        tags.forEach((tag) => {
+            tag = tag.trim()
+            console.log('tag')
+            text = text.replaceAll(tag, `<mark>${tag.slice(1, tag.length)}</mark>&nbsp;`)
+        })
+        return text
+    }
+
 
     return (
-        <Form className={className}>
+        <Form id='edit_form' className={className} onSubmit={submitForm}>
             <Form.Group>
                 <Form.Control
+                    ref={titleRef}
                     id='title'
-                    type="text"
+                    as='div'
+                    contentEditable
                     placeholder="Enter title"
-                    value={noteTitle}
-                    onChange={changeNoteTitle}
+                    style={{border: `${titleError ? '4px solid #ff6565' : 'none'}`}}
+                    dangerouslySetInnerHTML={{__html: editNoteTitle}}
                 />
+                {titleError ?
+                    <div className="custom-error-message">{titleError}</div>
+                    : null
+                }
                 <Form.Control
+                    ref={descriptionRef}
                     id='description'
-                    as="textarea"
-                    rows={7}
+                    as='div'
+                    contentEditable
+                    style={{border: `${descriptionError ? '4px solid #ff6565' : 'none'}`}}
                     placeholder="Enter text"
-                    value={noteDescription}
-                    onChange={changeNoteDescription}
+                    dangerouslySetInnerHTML={{__html: editNoteDescription}}
+                />
+                {descriptionError ?
+                    <div className="custom-error-message">{descriptionError}</div>
+                    : null
+                }
+                <Form.Control
+                    id='tags'
+                    name='tags'
+                    type="text"
+                    placeholder="Enter tags"
+                    value={editedTags}
+                    onChange={setTags}
                 />
             </Form.Group>
         </Form>

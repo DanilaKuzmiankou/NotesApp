@@ -6,10 +6,11 @@ interface CustomModalProps {
     show: boolean,
     children: ReactNode,
     onHide?: MouseEventHandler<HTMLButtonElement>,
-    bodyClassName?: string
+    bodyClassName?: string,
+    saveButton?: boolean,
 }
 
-export const CustomModal:FC<CustomModalProps> = ({onHide, show, children, bodyClassName}) => {
+export const CustomModal:FC<CustomModalProps> = ({onHide, show, children, bodyClassName, saveButton}) => {
 
     return (
         <Modal
@@ -18,12 +19,22 @@ export const CustomModal:FC<CustomModalProps> = ({onHide, show, children, bodyCl
             backdrop='static'
             centered
             keyboard
-
         >
             <Modal.Body className={`${bodyClassName} modal_body`}>
                 {children}
                 <div className={`${bodyClassName} buttons`}>
-                    <Button className='close_button' variant="danger" onClick={onHide}>Close</Button>
+                    {saveButton ?
+                        <Button
+                            className='button'
+                            variant="success"
+                            form='edit_form'
+                            type="submit"
+                        >
+                            Save
+                        </Button>
+                        : null
+                    }
+                    <Button className='button' variant="danger" onClick={onHide}>Close</Button>
                 </div>
             </Modal.Body>
         </Modal>
