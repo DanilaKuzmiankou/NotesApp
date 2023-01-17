@@ -7,7 +7,7 @@ $main_background: #131722;
   display: flex;
   flex-direction: column;
 
-  h1 {
+  #app_name {
     margin: 15px 10px 30px;
     font-size: 7rem;
     color: white;
@@ -27,7 +27,6 @@ $main_background: #131722;
     margin: 20px 10px;
     height: auto;
   }
-
 }
 
 .btn {
@@ -45,5 +44,20 @@ $main_background: #131722;
     max-width: 400px;
     font-size: 3rem;
     margin: auto 0;
+
+    &:not(:hover) {
+      box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    }
+  }
+
+  #search_container {
+    position: relative;
+  }
+
+  #clear_icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
