@@ -17,6 +17,10 @@ $scale_transition_duration: 100ms;
 .container {
   transition-duration: $scale_transition_duration;
 
+  &:not(:hover) {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  }
+
   &:hover {
     transform: scale(1.05);
 
@@ -78,6 +82,7 @@ $scale_transition_duration: 100ms;
   width: 100%;
   min-width: calc(100vw - 40px);
 
+
   @media screen and (min-width: 600px) {
     min-width: 400px;
   }
@@ -87,7 +92,14 @@ $scale_transition_duration: 100ms;
     font-size: 4rem;
     margin: 15px 15px;
     white-space: normal;
-    word-break: break-all;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
   }
 
   p {
@@ -96,15 +108,21 @@ $scale_transition_duration: 100ms;
     color: white;
     font-family: inherit;
     white-space: normal;
-    word-break: break-all;
     margin: 0 15px 50px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
   }
 
   h2 {
     font-size: 1.8rem;
     margin-top: auto;
   }
-
 }
 
 .view_container {

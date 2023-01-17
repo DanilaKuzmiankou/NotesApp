@@ -2,6 +2,7 @@ import {ChangeEvent, FC, FormEvent, useRef, useState} from "react";
 import {Form} from "react-bootstrap";
 import {BasicNoteProps} from "../../../models/NoteInterface";
 import './EditNote.scss'
+import {highlightTags} from "../../../utils/Utils";
 
 interface EditNoteProps extends BasicNoteProps {
     saveNote: (id: number | undefined, title: string, description: string, color: string | undefined, tags: string[] | undefined) => void
@@ -11,8 +12,8 @@ export const EditNote: FC<EditNoteProps> = ({className, title, description, id, 
 
     const descriptionRef = useRef<HTMLDivElement>(null)
     const titleRef = useRef<HTMLDivElement>(null)
-    const [editNoteDescription, setEditNoteDescription] = useState(highlightPrevTags(description, tags))
-    const [editNoteTitle, setEditNoteTitle] = useState(highlightPrevTags(title, tags))
+    const [editNoteDescription, setEditNoteDescription] = useState(highlightTags(description, tags))
+    const [editNoteTitle, setEditNoteTitle] = useState(highlightTags(title, tags))
     const [editedTags, setEditedTags] = useState(tags.join(', '))
     const [titleError, setTitleError] = useState('')
     const [descriptionError, setDescriptionError] = useState('')
@@ -33,8 +34,8 @@ export const EditNote: FC<EditNoteProps> = ({className, title, description, id, 
         let cleanTitle
         cleanTitle = cleanTextFromHTMLTags(editedTitle)
         cleanDescription = cleanTextFromHTMLTags(editedDescription)
-        editedTitle = highlightPrevTags(highlightNewTags(cleanTitle, resultTags), resultTags)
-        editedDescription = highlightPrevTags(highlightNewTags(cleanDescription, resultTags), resultTags)
+        editedTitle = highlightTags(cleanTitle, resultTags, true)
+        editedDescription = highlightTags(cleanDescription, resultTags, true)
         setEditNoteDescription(editedDescription)
         setEditNoteTitle(editedTitle)
         cleanDescription = cleanTextFromHTMLTags(editedDescription)
@@ -47,7 +48,6 @@ export const EditNote: FC<EditNoteProps> = ({className, title, description, id, 
         validatedTags = [...getTagsFromString(editedTitle), ...getTagsFromString(editedDescription), ...validatedTags]
         return [...new Set(validatedTags.map(tag => `#${tag}`))]
     }
-
 
     const cleanTextFromHTMLTags = (text: string): string => {
         const temp = document.createElement("div");
@@ -80,23 +80,6 @@ export const EditNote: FC<EditNoteProps> = ({className, title, description, id, 
     }
 
     const setTags = (event: ChangeEvent<HTMLInputElement>) => setEditedTags(event.target.value)
-
-    function highlightPrevTags(text: string, tags: string[]): string {
-        tags.forEach((tag) => {
-            tag = tag.trim().slice(1, tag.length)
-            text = text.replaceAll(tag, `<mark>${tag}</mark>`)
-        })
-        return text
-    }
-
-    function highlightNewTags(text: string, tags: string[]): string {
-        tags.forEach((tag) => {
-            tag = tag.trim()
-            text = text.replaceAll(tag, `<mark>${tag.slice(1, tag.length)}</mark>&nbsp;`)
-        })
-        return text
-    }
-
 
     return (
         <Form id='edit_form' className={className} onSubmit={submitForm}>

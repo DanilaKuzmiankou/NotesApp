@@ -18,7 +18,7 @@ export const NewNote: FC<NewNote> = ({saveNote, isEditModalOpen, changeEditModal
     const [showEditModal, setShowEditModal] = useState(isEditModalOpen)
     const [randomNumber, setRandomNumber] = useState(getRandomInt(6))
 
-    function getRandomInt (max: number): number {
+    function getRandomInt(max: number): number {
         return Math.floor(Math.random() * max);
     }
 

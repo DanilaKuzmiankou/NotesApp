@@ -1,4 +1,4 @@
-import {FC, SyntheticEvent, useState} from "react";
+import {FC, memo, SyntheticEvent, useState} from "react";
 import {IconContext} from 'react-icons';
 import {AiOutlineEye} from "react-icons/ai";
 import {CustomModal} from "../../CustomModal/CustomModal";
@@ -17,8 +17,7 @@ interface NoteProps {
     deleteNote: (id: number) => void
 }
 
-export const MainScreenNote: FC<NoteProps> = ({id, title, description, tags, color, saveNote, deleteNote}) => {
-
+export const MainScreenNote: FC<NoteProps> = memo(({id, title, description, tags, color, saveNote, deleteNote}) => {
 
     const [showModal, setShowModal] = useState(false)
     const [showEditModal, setShowEditModal] = useState(false)
@@ -58,6 +57,7 @@ export const MainScreenNote: FC<NoteProps> = ({id, title, description, tags, col
                     title={title}
                     description={description}
                     tags={tags}
+                    showTags
                 >
                     <EditAndDeleteIcons className='icons' onDelete={handleDeleteNote} onEdit={editNote}/>
                 </BasicNote>
@@ -79,4 +79,4 @@ export const MainScreenNote: FC<NoteProps> = ({id, title, description, tags, col
             </CustomModal>
         </>
     );
-};
+});
